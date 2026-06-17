@@ -8,10 +8,9 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential clang ldid libxml2 libxml2-dev
+          sudo apt-get install -y build-essential clang libxml2 libxml2-dev
       - name: Build
         run: |
-          # تنزيل Theos وتثبيته في بيئة العمل
           export THEOS=$HOME/theos
           git clone --recursive https://github.com/theos/theos.git $THEOS
           make package
