@@ -3,12 +3,17 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: theos/sdks:latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential clang ldid libxml2 libxml2-dev
       - name: Build
         run: |
+          # تنزيل Theos وتثبيته في بيئة العمل
+          export THEOS=$HOME/theos
+          git clone --recursive https://github.com/theos/theos.git $THEOS
           make package
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
