@@ -16,8 +16,8 @@ jobs:
       - name: Build
         run: |
           export THEOS=$HOME/theos
-          # محاولة البناء مباشرة بدون SDK خارجية
-          make package
+          # هذا السطر ضروري لأن Makefile الخاص بك لا يحدد المسارات
+          make package THEOS_PACKAGE_DIR=packages
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
