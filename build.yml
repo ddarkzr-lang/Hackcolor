@@ -1,0 +1,17 @@
+name: Build Mod Menu
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: theos/sdks:latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        run: |
+          make package
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ModMenu
+          path: packages/
