@@ -8,23 +8,14 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential libxml2 libxml2-dev
+          sudo apt-get install -y build-essential clang
       - name: Setup Theos
         run: |
           export THEOS=$HOME/theos
           git clone --recursive https://github.com/theos/theos.git $THEOS
-          # تحميل الـ Toolchain وفكها مباشرة داخل Theos
-          curl -LO https://github.com/theos/toolchain/releases/latest/download/linux.tar.xz
-          tar -xf linux.tar.xz -C $THEOS
-          # تحميل الـ SDKs
-          mkdir -p $THEOS/sdks
-          curl -LO https://github.com/theos/sdks/releases/latest/download/iPhoneOS16.5.sdk.tar.xz
-          tar -xf iPhoneOS16.5.sdk.tar.xz -C $THEOS/sdks
       - name: Build
         run: |
           export THEOS=$HOME/theos
-          # ربط مسار الـ toolchain يدوياً لضمان رؤية clang
-          export PATH=$THEOS/toolchain/linux/iphone/bin:$PATH
           make package
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
